@@ -57,14 +57,25 @@ namespace FluentEmail.SendGrid
                 mailMessage.AddHeaders(email.Data.Headers);
             }
 
-            if (email.Data.IsHtml)
+            if (email.Data.TemplateData!=null && !string.IsNullOrWhiteSpace(email.Data.TemplateId))
             {
-                mailMessage.HtmlContent = email.Data.Body;
+                mailMessage.SetTemplateId(email.Data.TemplateId);
+                mailMessage.SetTemplateData(email.Data.TemplateData);
             }
             else
             {
-                mailMessage.PlainTextContent = email.Data.Body;
+                mailMessage.SetSubject(email.Data.Subject);
+
+                if (email.Data.IsHtml)
+                {
+                    mailMessage.HtmlContent = email.Data.Body;
+                }
+                else
+                {
+                    mailMessage.PlainTextContent = email.Data.Body;
+                }
             }
+
 
             switch (email.Data.Priority)
             {
