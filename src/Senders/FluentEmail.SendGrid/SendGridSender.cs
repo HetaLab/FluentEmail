@@ -50,8 +50,6 @@ namespace FluentEmail.SendGrid
                 // SendGrid does not support multiple ReplyTo addresses
                 mailMessage.SetReplyTo(email.Data.ReplyToAddresses.Select(ConvertAddress).First());
 
-            mailMessage.SetSubject(email.Data.Subject);
-
             if (email.Data.Headers.Any())
             {
                 mailMessage.AddHeaders(email.Data.Headers);
